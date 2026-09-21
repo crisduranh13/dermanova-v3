@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dermanova — Una nueva forma de cuidar tu piel</title>
+<meta name="description" content="Especialistas en dermatología clínica, quirúrgica, oncología cutánea, láser y estética en Satélite, Zona Esmeralda y Malinalco.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ════════════════════════════════════════════════════════════════
+   TOKENS DE DISEÑO — DERMANOVA
+   ════════════════════════════════════════════════════════════════ */
+:root {
+  --primary:        #0F344C; 
+  --accent:         #00A896; 
+  --accent-light:   #E0F2F1; 
+  --bg-light:       #F8FAFC; 
+  --text-dark:      #1E293B;
+  --text-muted:     #475569;
+  --white:          #FFFFFF;
+  --whatsapp:       #00A896; 
+  --blue-logo:      #0F344C; 
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-light);
+  color: var(--text-dark);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR PERSONALIZADO */
+.cursor { width:10px;height:10px;background:var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;mix-blend-mode:multiply; }
+.cursor-ring { width:36px;height:36px;border:1.5px solid var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:transform 0.22s ease,width 0.3s,height 0.3s;opacity:0.5; }
+@media(hover:none){.cursor,.cursor-ring{display:none}body{cursor:auto}}
+
+/* BARRA SUPERIOR INFORMATIVA */
+.top-bar {
+  background: #0A2436;
+  color: rgba(255,255,255,0.85);
+  font-size: 11.5px;
+  padding: 8px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+  z-index: 201;
+}
+.top-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.top-bar-info { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 100%; }
+.top-bar-item { display: flex; align-items: center; gap: 6px; }
+.top-bar-item strong { color: var(--accent); }
+.top-bar-item a { color: rgba(255,255,255,0.9); text-decoration: none; transition: color 0.2s; }
+.top-bar-item a:hover { color: var(--accent); }
+
+/* NAV */
+nav {
+  position: fixed; top: 34px; left: 0; right: 0; z-index: 200;
+  padding: 18px 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all 0.4s ease;
+}
+nav.scrolled {
+  top: 0;
+  background: rgba(248,250,252,0.96);
+  backdrop-filter: blur(16px);
+  padding: 14px 52px;
+  box-shadow: 0 4px 20px rgba(15,52,76,0.06);
+}
+.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px; font-weight: 700; letter-spacing: 1.5px; color: var(--white); text-decoration: none;
+  display: flex; flex-direction: column; line-height: 1;
+}
+nav.scrolled .nav-logo { color: var(--blue-logo); }
+.nav-logo span.subtag { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; color: var(--accent); font-family: 'DM Sans', sans-serif;}
+.nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+.nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; transition: color 0.3s; }
+nav.scrolled .nav-links a { color: var(--text-muted); }
+.nav-links a:hover { color: var(--accent)!important; }
+.nav-cta { background: var(--accent)!important; color: var(--white)!important; padding: 10px 22px!important; border-radius: 50px; transition: all 0.3s!important; }
+.nav-cta:hover { background: var(--primary)!important; transform: translateY(-2px); }
+
+/* HAMBURGUESA */
+.nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; z-index: 210; padding: 8px; }
+.nav-burger span { display: block; width: 100%; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition-smooth); }
+nav.scrolled .nav-burger span, nav.menu-open .nav-burger span { background: var(--primary); }
+.nav-burger.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.nav-burger.active span:nth-child(2){ opacity: 0; }
+.nav-burger.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+/* MENÚ MÓVIL */
+.mobile-nav { position: fixed; top: 0; right: 0; width: min(82vw, 340px); height: 100vh; background: var(--white); z-index: 205; box-shadow: -10px 0 40px rgba(0,0,0,0.15); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); padding: 90px 28px 40px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto;}
+.mobile-nav.active { transform: translateX(0); }
+.mobile-nav a { color: var(--primary); text-decoration: none; font-size: 15px; font-weight: 600; padding: 12px 0; border-bottom: 1px solid #E2E8F0; }
+.mobile-nav a.nav-cta { background: var(--accent)!important; color: var(--white)!important; text-align: center; border-radius: 50px; border-bottom: none; margin-top: 16px; padding: 14px!important; }
+.mobile-nav-overlay { position: fixed; inset: 0; background: rgba(15,52,76,0.5); z-index: 204; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; backdrop-filter: blur(2px); }
+.mobile-nav-overlay.active { opacity: 1; pointer-events: all; }
+
+/* ═══ HERO ═══ */
+#hero {
+  position: relative; width: 100%; min-height: 90vh;
+  overflow: hidden; display: flex; align-items: center; justify-content: center; padding-top: 80px; padding-bottom: 60px;
+}
+.hero-vid { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.hero-vid iframe { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100%; transform: translate(-50%,-50%); pointer-events: none; border: 0; }
+.hero-ov { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(15,52,76,0.85) 0%, rgba(15,52,76,0.6) 50%, rgba(15,52,76,0.95) 100%); }
+.hero-content { position: relative; z-index: 2; text-align: center; padding: 0 20px; max-width: 980px; }
+
+/* ESTILOS NUEVOS/AJUSTADOS DE HERO LOGO Y DESTACADO */
+.hero-main-logo {
+  max-width: 280px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 10px;
+  display: block;
+  filter: drop-shadow(0 4px 15px rgba(0,0,0,0.4));
+}
+.hero-logo-sub { font-size: 14px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 25px; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5)); }
+.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(34px, 5.5vw, 68px); font-weight: 400; line-height: 1.12; color: var(--white); }
+.hero-title em { font-style: italic; color: var(--accent-light); }
+
+/* TEXTO CON PESO Y EFECTO EN HERO */
+.hero-services-tag {
+  margin-top: 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(14px, 2vw, 19px);
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  text-shadow: 0 0 15px rgba(0, 168, 150, 0.7), 0 2px 4px rgba(0, 0, 0, 0.5);
+  display: inline-block;
+  padding: 6px 20px;
+  border-radius: 30px;
+  background: rgba(0, 168, 150, 0.15);
+  border: 1px solid rgba(0, 168, 150, 0.4);
+  backdrop-filter: blur(5px);
+}
+
+.hero-btns { margin-top: 35px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* BOTONES */
+.btn-primary { background: var(--accent); color: var(--white); padding: 16px 36px; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; border-radius: 50px; display: inline-block; transition: all 0.3s; box-shadow: 0 8px 24px rgba(0,168,150,0.35); border: none; cursor: pointer; }
+.btn-primary:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(15,52,76,0.3); }
+
+.btn-secondary-outline { background: transparent; color: var(--white); padding: 15px 34px; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; border-radius: 50px; display: inline-block; transition: all 0.3s; border: 1.5px solid rgba(255,255,255,0.5); }
+.btn-secondary-outline:hover { background: var(--white); color: var(--primary); border-color: var(--white); transform: translateY(-2px); }
+
+/* GRID DISTINTIVOS DE CONFIANZA EN HERO */
+.trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 55px; text-align: left; }
+.trust-card { background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 16px 18px; color: var(--white); font-size: 12.5px; line-height: 1.45; display: flex; gap: 12px; align-items: flex-start; }
+.trust-card span.check { color: var(--accent); font-size: 16px; font-weight: 900; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+
+/* ═══ GOOGLE REVIEWS & BARRA DE MÉTRICAS ═══ */
+.google-reviews-bar { background: var(--white); padding: 24px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; z-index: 10; margin-top: -35px; max-width: 1080px; margin-left: auto; margin-right: auto; border-radius: 18px; display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 20px; border: 1px solid #E2E8F0; }
+.gr-item { display: flex; align-items: center; gap: 12px; }
+.gr-google-logo { width: 28px; height: 28px; }
+.gr-stars { color: #F59E0B; font-size: 16px; letter-spacing: 2px; }
+.gr-text { font-size: 13px; color: var(--text-dark); }
+.gr-text strong { font-weight: 700; color: var(--primary); }
+
+/* SECCIONES COMUNES */
+section { padding: 90px 0; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+.eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+.stitle { font-family: 'Playfair Display', serif; font-size: clamp(30px, 3.8vw, 50px); font-weight: 400; line-height: 1.16; color: var(--primary); }
+.stitle em { font-style: italic; color: var(--accent); }
+
+/* ═══ NOSOTROS ═══ */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.about-visual { position: relative; }
+.about-visual img { width: 100%; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); object-fit: cover; aspect-ratio: 4/5; }
+.about-badge { position: absolute; bottom: -20px; right: -20px; background: var(--primary); color: var(--white); padding: 22px 28px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+.about-badge strong { font-family: 'Playfair Display', serif; font-size: 38px; color: var(--accent-light); display: block; line-height: 1; }
+
+/* ═══ EQUIPO MÉDICO ═══ */
+#equipo { background: var(--white); }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 50px; }
+.team-card { background: var(--bg-light); border-radius: 22px; padding: 32px 26px; border: 1px solid #E2E8F0; transition: var(--transition-smooth); display: flex; flex-direction: column; justify-content: space-between; }
+.team-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(15,52,76,0.06); border-color: var(--accent); }
+.team-role { display: inline-block; padding: 4px 12px; border-radius: 20px; background: var(--accent-light); color: var(--accent); font-size: 10.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+.team-card h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--primary); margin-bottom: 6px; }
+.team-bio { font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin-bottom: 15px; }
+.team-cedulas { margin-top: 15px; padding-top: 15px; border-top: 1px solid #E2E8F0; font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+.team-card-image { width: 100%; height: 220px; object-fit: cover; border-radius: 12px; margin-top: 20px; }
+
+/* ═══ BENTO GRID ESPECIALIDADES ═══ */
+#especialidades { background: var(--bg-light); }
+.bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; margin-top: 45px; }
+.bento-card { background: var(--white); border-radius: 20px; padding: 30px; position: relative; overflow: hidden; border: 1px solid #E2E8F0; transition: all 0.3s; display: flex; flex-direction: column; justify-content: space-between; }
+.bento-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(15,52,76,0.06); border-color: var(--accent); }
+.b-4 { grid-column: span 4; }
+.b-6 { grid-column: span 6; }
+.b-8 { grid-column: span 8; }
+.b-12 { grid-column: span 12; }
+.bento-card h3 { font-size: 21px; color: var(--primary); margin-bottom: 10px; font-family: 'Playfair Display', serif; font-weight: 400; }
+.bento-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; }
+.bento-tag { display: inline-block; padding: 4px 12px; border-radius: 20px; background: var(--accent-light); color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+.bento-img { width: calc(100% + 60px); margin: 20px -30px -30px -30px; height: 180px; object-fit: cover; border-top: 1px solid #E2E8F0; }
+
+/* ═══ MÓDULO TECNOLOGÍA ═══ */
+#tecnologia {
+  background: linear-gradient(135deg, #0A2436 0%, #0F344C 60%, #061824 100%);
+  color: var(--white); padding: 100px 0;
+}
+#tecnologia .stitle { color: var(--white); }
+#tecnologia .eyebrow { color: var(--accent-light); }
+.tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 50px; }
+.tech-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(0,168,150,0.2); border-radius: 20px; padding: 28px 24px; transition: all 0.3s; }
+.tech-card:hover { background: rgba(0,168,150,0.15); border-color: rgba(0,168,150,0.5); transform: translateY(-4px); }
+.tech-icon { font-size: 28px; margin-bottom: 16px; }
+.tech-card h4 { font-family: 'Space Grotesk', sans-serif; font-size: 16px; color: var(--accent-light); margin-bottom: 10px; font-weight: 700; }
+.tech-card p { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+
+/* ═══ TESTIMONIOS ═══ */
+#testimonios { background: var(--white); }
+.reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 45px; }
+.review-card { background: var(--bg-light); border: 1px solid #E2E8F0; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; justify-content: space-between; }
+.review-card-top { display: flex; align-items: center; gap: 12px; }
+.review-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex-shrink: 0; }
+.review-name { font-size: 14px; font-weight: 700; color: var(--primary); }
+.review-stars { color: #F59E0B; font-size: 13px; letter-spacing: 1px; }
+.review-text { font-size: 14px; color: var(--text-muted); line-height: 1.65; font-style: italic; }
+
+/* ═══ PUBLICACIONES ═══ */
+#publicaciones { background: var(--bg-light); text-align: center; }
+.art-box { text-align: left; background: var(--white); padding: 40px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #E2E8F0; margin-top: 10px; }
+.art-box-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--primary); margin-bottom: 22px; padding-bottom: 14px; border-bottom: 2px solid var(--accent-light); }
+.art-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.art-item { display: flex; align-items: center; gap: 18px; padding: 18px 20px; border-radius: 16px; border: 1px solid transparent; border-left: 4px solid transparent; transition: background 0.35s, border-color 0.35s, transform 0.35s, box-shadow 0.35s; }
+.art-item:hover { background: var(--accent-light); border-color: rgba(0,168,150,0.25); border-left-color: var(--accent); transform: translateX(4px); box-shadow: 0 8px 22px rgba(0,168,150,0.12); }
+.art-body { flex: 1; min-width: 0; }
+.art-name { font-size: 14.5px; line-height: 1.55; color: var(--text-dark); transition: color 0.35s; }
+.art-item:hover .art-name { color: var(--primary); }
+.art-meta { margin-top: 6px; font-size: 13px; color: var(--text-muted); }
+.art-meta em { color: var(--primary); font-weight: 600; }
+.art-read { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; background: var(--primary); color: var(--white); text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 11px 20px; border-radius: 50px; transition: background 0.3s, transform 0.3s; }
+.art-item:hover .art-read { background: var(--accent); }
+.art-read:hover { transform: translateY(-2px); }
+@media(max-width:600px){ .art-box { padding: 26px 18px; } .art-item { flex-wrap: wrap; padding: 16px; } .art-read { margin-left: 0; } }
+
+/* ═══ SEDES Y CONTACTO ═══ */
+#contacto { background: var(--white); }
+.sedes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-top: 45px; }
+.sede-card { background: var(--bg-light); border-radius: 24px; padding: 36px; border: 1px solid #E2E8F0; box-shadow: 0 10px 30px rgba(0,0,0,0.03); display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
+.sede-title { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--primary); margin-bottom: 8px; }
+.sede-info-item { display: flex; gap: 12px; font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px; }
+.sede-info-item strong { color: var(--primary); }
+.sede-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+/* BOTÓN WHATSAPP POR SEDE */
+.btn-wa-sede { position: relative; width: 100%; background: #25D366; color: #fff; padding: 10px 18px 10px 10px; border-radius: 60px; text-decoration: none; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 20px rgba(37,211,102,0.35); transition: background 0.3s, transform 0.3s, box-shadow 0.3s; overflow: visible; }
+.btn-wa-sede::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 0 rgba(37,211,102,0.55); animation: waPulse 2.4s infinite; pointer-events: none; }
+.btn-wa-sede .wa-ico { flex: 0 0 44px; height: 44px; border-radius: 50%; background: #fff; color: #25D366; display: flex; align-items: center; justify-content: center; transition: transform 0.4s; }
+.btn-wa-sede .wa-stack { position: relative; flex: 1; height: 38px; overflow: hidden; }
+.btn-wa-sede .wa-default, .btn-wa-sede .wa-hover { position: absolute; left: 0; right: 0; top: 0; height: 38px; display: flex; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s; }
+.btn-wa-sede .wa-default { flex-direction: column; justify-content: center; line-height: 1.15; }
+.btn-wa-sede .wa-default small { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; opacity: 0.92; }
+.btn-wa-sede .wa-default strong { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 0.5px; }
+.btn-wa-sede .wa-hover { align-items: center; gap: 8px; font-size: 16px; font-weight: 700; transform: translateY(100%); opacity: 0; }
+.btn-wa-sede:hover { background: #1EBE5A; transform: translateY(-3px); box-shadow: 0 14px 28px rgba(37,211,102,0.45); }
+.btn-wa-sede:hover::after { animation: none; }
+.btn-wa-sede:hover .wa-ico { transform: rotate(-12deg) scale(1.08); }
+.btn-wa-sede:hover .wa-default { transform: translateY(-100%); opacity: 0; }
+.btn-wa-sede:hover .wa-hover { transform: translateY(0); opacity: 1; }
+.btn-wa-sede:hover .wa-hover svg { animation: waArrow 0.9s ease-in-out infinite; }
+@keyframes waPulse { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.55); } 70% { box-shadow: 0 0 0 12px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+@keyframes waArrow { 0%,100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+
+.contact-links-bar { background: var(--primary); border-radius: 20px; padding: 30px; margin-top: 50px; display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; align-items: center; }
+.contact-link-item { color: var(--white); text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; transition: color 0.3s; }
+.contact-link-item:hover { color: var(--accent); }
+
+.contact-form-wrapper { background: var(--bg-light); border-radius: 24px; padding: 40px; border: 1px solid #E2E8F0; margin-top: 40px; box-shadow: 0 15px 35px rgba(0,0,0,0.03); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: span 2; }
+.form-group label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); }
+.form-group input, .form-group select, .form-group textarea { padding: 14px 18px; border-radius: 12px; border: 1px solid #E2E8F0; font-family: inherit; font-size: 14px; background: var(--white); color: var(--primary); transition: border-color 0.3s; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); background: var(--white); }
+
+/* BOTÓN FLOTANTE WHATSAPP DUAL CORPORATIVO */
+.floating-wa-custom { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: inline-flex; align-items: center; gap: 12px; background-color: var(--whatsapp); color: var(--white); padding: 14px 24px; border-radius: 100px; text-decoration: none; box-shadow: 0 15px 35px rgba(15,52,76,0.3), 0 0 0 1px rgba(0,168,150,0.3); font-weight: 600; font-size: 13px; transition: var(--transition-smooth); border: 1px solid var(--accent); cursor: pointer; }
+.floating-wa-pulse { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 100px; animation: waPulse 2.2s infinite; pointer-events: none; }
+@keyframes waPulse { 0%{box-shadow:0 0 0 0 rgba(0,168,150,0.6)} 70%{box-shadow:0 0 0 18px rgba(0,168,150,0)} 100%{box-shadow:0 0 0 0 rgba(0,168,150,0)} }
+.floating-wa-icon { width: 22px; height: 22px; fill: var(--white); transition: var(--transition-smooth); }
+.floating-wa-custom:hover { transform: translateY(-4px); background-color: var(--primary); border-color: var(--white); }
+
+/* FOOTER Y PRIVACIDAD */
+footer { background: #0A2436; color: #94A3B8; padding: 60px 0 40px; text-align: center; font-size: 12px; line-height: 1.8; border-top: 2px solid var(--accent); }
+footer span { color: var(--white); font-weight: 600; }
+footer a { color: var(--accent); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+.footer-logo { max-width: 220px; margin: 0 auto 15px; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2)); }
+.footer-socials a { color: var(--white); transition: color 0.3s; }
+.footer-socials a:hover { color: var(--accent); }
+
+/* MODAL DE AVISO DE PRIVACIDAD */
+.modal-legal { position: fixed; inset: 0; background: rgba(15,52,76,0.85); backdrop-filter: blur(6px); z-index: 999999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.modal-legal.active { opacity: 1; pointer-events: all; }
+.modal-legal-content { background: var(--white); border-radius: 20px; width: min(90vw, 750px); max-height: 85vh; overflow-y: auto; padding: 40px; color: var(--text-dark); position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.25); text-align: left; }
+.modal-legal-close { position: absolute; top: 20px; right: 20px; border: none; background: #E2E8F0; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; }
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav { padding: 16px 20px; top: 0; }
+  .top-bar { display: none; }
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+  .about-grid, .team-grid, .sedes-grid, .trust-grid, .reviews-grid, .tech-grid { grid-template-columns: 1fr; gap: 24px; }
+  .b-4, .b-6, .b-8, .b-12 { grid-column: span 12; }
+  .google-reviews-bar { flex-direction: column; text-align: center; margin-top: -20px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group.full { grid-column: span 1; }
+  .contact-links-bar { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR EFFECT -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- BARRA SUPERIOR DE ATENCIÓN Y CONTACTO -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <div class="top-bar-info">
+      <div class="top-bar-item">
+        📍 <strong>Satélite:</strong> Mar y Jue 4-8 PM, Sáb 10 AM-2 PM | <a href="https://wa.me/525516967725" target="_blank">WA: 55 1696 7725</a>
+      </div>
+      <div class="top-bar-item">
+        📍 <strong>Z. Esmeralda:</strong> Mar a Vie 4-8 PM, Sáb 10 AM-2 PM | <a href="https://wa.me/525516862787" target="_blank">WA: 55 1686 2787</a>
+      </div>
+      <div class="top-bar-item">
+        📍 <strong>Malinalco:</strong> <a href="tel:5530849136">Tel: 55 3084 9136</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVEGACIÓN PRINCIPAL -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">
+    Dermanova
+    <span class="subtag">Una nueva forma de cuidar tu piel</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#especialidades">Especialidades</a></li>
+    <li><a href="#tecnologia">Tecnología</a></li>
+    <li><a href="#publicaciones">Publicaciones</a></li>
+    <li><a href="#contacto">Ubicaciones</a></li>
+    <li><a href="#contacto" class="nav-cta">Agendar Consulta</a></li>
+  </ul>
+  <button class="nav-burger" id="navBurger" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MENÚ MÓVIL OVERLAY -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#nosotros">Nosotros</a>
+  <a href="#equipo">Equipo Médico</a>
+  <a href="#especialidades">Especialidades</a>
+  <a href="#tecnologia">Tecnología</a>
+  <a href="#publicaciones">Publicaciones</a>
+  <a href="#testimonios">Testimonios</a>
+  <a href="#contacto">Ubicaciones y Citas</a>
+  <a href="#contacto" class="nav-cta">Agendar Consulta</a>
+</div>
+
+<!-- HERO SECTION -->
+<section id="hero">
+  <div class="hero-vid">
+    <iframe src="https://www.youtube.com/embed/x-CnWlrN2ws?autoplay=1&mute=1&loop=1&playlist=x-CnWlrN2ws&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media"></iframe>
+  </div>
+  <div class="hero-ov"></div>
+  
+  <div class="hero-content">
+    <!-- LOGOTIPO EN LUGAR DE TEXTO DERMANOVA -->
+    <img src="https://vende24siete.com/images/dermanova-logo.png" alt="Dermanova Logo" class="hero-main-logo">
+    
+    <div class="hero-logo-sub">Tu piel tiene respuestas.</div>
+    
+    <!-- TEXTO CAMBIADO -->
+    <h1 class="hero-title">Tu piel tiene respuestas,<em>sabemos dónde buscarlas.
+      </em></h1>
+
+    <!-- NUEVO TEXTO DESTACADO CON EFECTO Y PESO -->
+    <div class="hero-services-tag">Clínica, quirúrgica, láser y estética</div>
+    
+    <div class="hero-btns">
+      <a href="#contacto" class="btn-primary">Agenda tu consulta</a>
+      <a href="#equipo" class="btn-secondary-outline">Conoce al equipo</a>
+    </div>
+
+    <!-- DISTINTIVOS DE CONFIANZA -->
+    <div class="trust-grid">
+      <div class="trust-card"><span class="check">✔</span> Más de 40 años de trayectoria médica ininterrumpida</div>
+      <div class="trust-card"><span class="check">✔</span> Dirige el Dr. Vicente Torres, ex Presidente de la Sociedad Mexicana de Dermatología</div>
+      <div class="trust-card"><span class="check">✔</span> Especialidad en Massachusetts General Hospital (Universidad de Harvard)</div>
+      <div class="trust-card"><span class="check">✔</span> Médicos con subespecialidad en cirugía y cáncer de piel</div>
+      <div class="trust-card"><span class="check">✔</span> Tres sedes equipadas en el Estado de México (Satélite, Z. Esmeralda y Malinalco)</div>
+      <div class="trust-card"><span class="check">✔</span> Atención médica especializada en Inglés y Español</div>
+    </div>
+  </div>
+</section>
+
+<!-- BARRA DE RECONOCIMIENTO Y REVIEWS -->
+<div class="google-reviews-bar">
+  <div class="gr-item">
+    <svg class="gr-google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+    <div>
+      <div class="gr-stars">★★★★★</div>
+      <div class="gr-text"><strong>40+ Años de Excelencia</strong> Médica</div>
+    </div>
+  </div>
+  <div class="gr-item">
+    <div class="gr-text"><strong>Miles de Pacientes</strong> Atendidos desde 1986</div>
+  </div>
+  <div class="gr-item">
+    <div class="gr-text"><strong>3 Sedes:</strong> Satélite, Zona Esmeralda y Malinalco</div>
+  </div>
+</div>
+
+<!-- 02 NOSOTROS (TEXTO ACTUALIZADO) -->
+<section id="nosotros">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual">
+        <img src="https://vende24siete.com/images/home-derma2.webp" alt="Clínica Dermanova">
+        <div class="about-badge">
+          <strong>40+</strong>
+          <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;">Años de Servicio</span>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow">SOBRE DERMANOVA</p>
+        <h2 class="stitle">La dermatología evoluciona, <em>nosotros también.</em></h2>
+        <p style="margin-top:18px;color:var(--text-muted);line-height:1.8;font-size:14.5px;">
+          Dermanova es la evolución de una práctica médica construida durante décadas, primero como Skin Láser y hoy como una clínica para la piel que conserva la misma forma de trabajar: escuchar, revisar, hacer un diagnóstico y explicar con claridad las opciones para cada paciente.
+        </p>
+        <p style="margin-top:14px;color:var(--text-muted);line-height:1.8;font-size:14.5px;">
+          Nuestro equipo combina experiencia clínica, actualización médica, información basada en evidencia y tecnología para atender enfermedades de la piel, cirugía, láser y procedimientos estéticos en Satélite, Zona Esmeralda y Malinalco, con el mismo compromiso de siempre y una atención clara, cercana y en constante evolución, para cada etapa de la vida.
+        </p>
+        <div style="margin-top:28px;">
+          <a href="#contacto" class="btn-primary">Agenda tu consulta</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 PERSONAL MÉDICO -->
+<section id="equipo">
+  <div class="container">
+    <div style="text-align:center;max-width:700px;margin:0 auto;">
+      <p class="eyebrow">QUIÉN TE ATIENDE</p>
+      <h2 class="stitle">Tres especialistas. <em>Una misma forma de cuidarte.</em></h2>
+      <p style="color:var(--text-muted);margin-top:12px;font-size:15px;">
+        Cada uno con su terreno de dominio, todos certificados y con amplia experiencia en dermatología general, médica, quirúrgica y estética.
+      </p>
+    </div>
+
+    <div class="team-grid">
+      <!-- DR VICENTE TORRES -->
+      <div class="team-card">
+        <div>
+          <span class="team-role">Dermatólogo</span>
+          <h3>Dr. Vicente Torres Lozada</h3>
+          <p class="team-bio">
+            Dermatólogo por la UNAM egresado del Centro Dermatológico "Dr. Ladislao de la Pascua". Fue Fellow y profesor visitante en el Massachusetts General Hospital de la Universidad de Harvard. Ex presidente de la Sociedad Mexicana de Dermatología y editor del tratado <em>Dermatología Práctica Iberolatinoamericana</em>.
+          </p>
+          <div class="team-cedulas">
+            <strong>Cédula profesional:</strong> 1369398<br>
+            <strong>Cédula de especialidad:</strong> 6384512
+          </div>
+        </div>
+        <div>
+          <a href="https://www.doctoralia.com.mx/perfil/vicente-torres-lozada" target="_blank" style="color:var(--accent);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;">Ver Perfil Doctoralia →</a>
+          <img src="https://vende24siete.com/images/drvicente.jpg" alt="Médico Dermatólogo" class="team-card-image">
+        </div>
+      </div>
+
+      <!-- DRA ROSA MARÍA CALDERÓN -->
+      <div class="team-card">
+        <div>
+          <span class="team-role">Oncología Cutánea</span>
+          <h3>Dra. Rosa María Calderón Amparán</h3>
+          <p class="team-bio">
+            Especialista en Dermatología y primera residente en graduarse de la subespecialidad en Oncología Cutánea en el Centro Dermatológico Pascua. Fue médica del Servicio de Dermatología del Hospital Central Norte de Pemex durante 28 años. Amplia experiencia en cirugía dermatológica y afecciones complejas.
+          </p>
+          <div class="team-cedulas">
+            <strong>Cédula profesional:</strong> 1050398<br>
+            <strong>Cédula de especialidad:</strong> 6820232
+          </div>
+        </div>
+        <div>
+          <a href="#contacto" style="color:var(--accent);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;">Agendar Cita →</a>
+          <img src="https://vende24siete.com/images/drarosa.jpg" alt="Médica Dermatóloga" class="team-card-image">
+        </div>
+      </div>
+
+      <!-- DRA MARÍA FERNANDA TORRES -->
+      <div class="team-card">
+        <div>
+          <span class="team-role">Cirugía & Dermato-Oncología</span>
+          <h3>Dra. María Fernanda Torres Calderón</h3>
+          <p class="team-bio">
+            Médica por el ITESM con mención honorífica. Cuenta con alta especialidad en cirugía dermatológica y dermato-oncológica (cáncer de piel inicial y avanzado). Realizó estancia en la clínica de melanoma del Hospital Clínic de Barcelona. Certificada por el Consejo Mexicano de Dermatología, experta en láser.
+          </p>
+          <div class="team-cedulas">
+            <strong>Cédula profesional:</strong> 11970830<br>
+            <strong>Cédula de especialidad:</strong> 15404623
+          </div>
+        </div>
+        <div>
+          <a href="#contacto" style="color:var(--accent);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;">Agendar Cita →</a>
+          <img src="https://vende24siete.com/images/dramafer.jpg" alt="Médica Dermatóloga" class="team-card-image">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 ESPECIALIDADES Y SERVICIOS -->
+<section id="especialidades">
+  <div class="container">
+    <div style="text-align:center;max-width:700px;margin:0 auto;">
+      <p class="eyebrow">EN QUÉ PODEMOS AYUDARTE</p>
+      <h2 class="stitle">Todo empieza con un diagnóstico, <em>nunca con una suposición</em></h2>
+      <p style="color:var(--text-muted);margin-top:12px;font-size:15px;">Llegar sin saber qué tienes es habitual; identificarlo con precisión es nuestro trabajo.</p>
+    </div>
+
+    <!-- BLOQUE 1: DERMATOLOGÍA CLÍNICA -->
+    <div style="margin-top:40px;">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:18px;color:var(--primary);letter-spacing:1px;margin-bottom:16px;">1. DERMATOLOGÍA CLÍNICA</h3>
+      <div class="bento-grid" style="margin-top:0;">
+        <div class="bento-card b-4">
+          <div>
+            <span class="bento-tag">Clínica</span>
+            <h3>Acné</h3>
+            <p>El acné tiene una base genética y hormonal. Se controla con diagnóstico preciso y tecnología eficaz, respaldados por expertos de la Alianza Global para Mejorar los Resultados Terapéuticos en Acné.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-acne.jpg" alt="Tratamiento de Acné" class="bento-img">
+        </div>
+        <div class="bento-card b-4">
+          <div>
+            <span class="bento-tag">Clínica</span>
+            <h3>Rosácea</h3>
+            <p>Se parece al acné, pero requiere un manejo especializado. Contamos con los recursos terapéuticos para controlar el enrojecimiento y brotes.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-rosacea.jpg" alt="Cuidado Facial" class="bento-img">
+        </div>
+        <div class="bento-card b-4">
+          <div>
+            <span class="bento-tag">Clínica</span>
+            <h3>Melasma y Manchas</h3>
+            <p>Cada mancha exige un abordaje distinto. Usar productos inadecuados puede empeorarla; te guiamos con tratamiento médico seguro.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-manchas.jpg" alt="Tratamiento de Manchas" class="bento-img">
+        </div>
+        <div class="bento-card b-4">
+          <div>
+            <span class="bento-tag">Clínica</span>
+            <h3>Caída de Cabello y Uñas</h3>
+            <p>Cambios en color, forma o densidad en uñas y cabello pueden señalar alteraciones de salud. Realizamos evaluación tricológica.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-cabello.jpg" alt="Tricología Médica" class="bento-img">
+        </div>
+        <div class="bento-card b-4">
+          <div>
+            <span class="bento-tag">Clínica</span>
+            <h3>Alergias y Dermatitis</h3>
+            <p>Buscamos el origen de la comezón, ronchas o brotes recurrentes en lugar de solo maquillar el síntoma.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-dermatitis.jpg" alt="Dermatitis y Alergias" class="bento-img">
+        </div>
+        <div class="bento-card b-4">
+          <div>
+            <span class="bento-tag">Diagnóstico</span>
+            <h3>Revisión de Lunares</h3>
+            <p>Utilizamos dermatoscopia avanzada para diferenciar lesiones benignas de malignas. Una revisión preventiva anual evita mayores riesgos.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-revsionlunares.jpg" alt="Revisión de Lunares" class="bento-img">
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 2: QUIRÚRGICA Y ONCOLÓGICA -->
+    <div style="margin-top:50px;">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:18px;color:var(--primary);letter-spacing:1px;margin-bottom:16px;">2. DERMATOLOGÍA QUIRÚRGICA Y ONCOLÓGICA</h3>
+      <div class="bento-grid" style="margin-top:0;">
+        <div class="bento-card b-6">
+          <div>
+            <span class="bento-tag">Procedimiento Quirúrgico</span>
+            <h3>Retiro de Lunares, Quistes y Lipomas</h3>
+            <p>Procedimientos ambulatorios bajo anestesia local, resueltos con alta precisión, técnica estética y máximo confort.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-retirolunares.jpg" alt="Cirugía Dermatológica" class="bento-img">
+        </div>
+        <div class="bento-card b-6">
+          <div>
+            <span class="bento-tag">Alta Especialidad</span>
+            <h3>Cirugía de Cáncer de Piel</h3>
+            <p>Dos de nuestras especialistas cuentan con subespecialidad en oncología cutánea y reconstrucción avanzada con colgajos e injertos. Detectar a tiempo lo cambia todo.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-cancer2.jpg" alt="Oncología Cutánea" class="bento-img">
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 3: ESTÉTICA Y LÁSER -->
+    <div style="margin-top:50px;">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:18px;color:var(--primary);letter-spacing:1px;margin-bottom:16px;">3. DERMATOLOGÍA ESTÉTICA Y LÁSER</h3>
+      <div class="bento-grid" style="margin-top:0;">
+        <div class="bento-card b-6">
+          <div>
+            <span class="bento-tag">Estética Médica</span>
+            <h3>Toxina Botulínica</h3>
+            <p>Suaviza las líneas de expresión con resultados naturales, preservando la expresión y el movimiento del rostro. Aplicado siempre por dermatólogos certificados.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-toxina.jpg" alt="Estética Médica" class="bento-img">
+        </div>
+        <div class="bento-card b-6">
+          <div>
+            <span class="bento-tag">Armonización</span>
+            <h3>Ácido Hialurónico, Inductores & Exosomas</h3>
+            <p>Restauración de volumen, firmeza y calidad cutánea con resultados armoniosos que respetan tus facciones.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-acido.jpg" alt="Armonización Facial" class="bento-img">
+        </div>
+        <div class="bento-card b-6">
+          <div>
+            <span class="bento-tag">Tecnología</span>
+            <h3>Terapia Láser Avanzada</h3>
+            <p>Mejora de textura, tratamiento de cicatrices de acné y manchas, eliminación de tatuajes y rejuvenecimiento con tecnología láser de vanguardia.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-laser.jpg" alt="Terapia Láser" class="bento-img">
+        </div>
+        <div class="bento-card b-6">
+          <div>
+            <span class="bento-tag">Láser Diodo</span>
+            <h3>Depilación Láser & Manejo del Exceso de Vello</h3>
+            <p>Reducción progresiva y permanente del vello bajo estricta supervisión médica personalizada según tu fototipo.</p>
+          </div>
+          <img src="https://vende24siete.com/images/dermaverse-depila.jpg" alt="Depilación Láser" class="bento-img">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 TECNOLOGÍA -->
+<section id="tecnologia">
+  <div class="container" style="text-align:center;">
+    <p class="eyebrow">DIAGNÓSTICO DE PRECISIÓN</p>
+    <h2 class="stitle">No adivinamos. <em>Diagnosticamos.</em></h2>
+    <p style="color:rgba(255,255,255,0.8);margin-top:16px;max-width:760px;margin-left:auto;margin-right:auto;font-size:15.5px;line-height:1.7;">
+      Muchos tratamientos fallan por falta de un diagnóstico profundo. En Dermanova combinamos más de 40 años de experiencia clínica con aparatología de última generación para ver lo que el ojo no alcanza a percibir.
+    </p>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-icon">⚡</div>
+        <h4>Láser de CO2 Fraccionado</h4>
+        <p>Estándar de oro para renovación celular profunda, rejuvenecimiento y atenuación de cicatrices de acné o textura irregular.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">✨</div>
+        <h4>Láser de Diodo</h4>
+        <p>Tecnología de depilación médica segura, eficaz y confortable adaptable a distintos tipos de piel.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🔬</div>
+        <h4>HIFU (Ultrasonido Focalizado)</h4>
+        <p>Lifting sin bisturí que estimula la producción de colágeno y elastina para mejorar la firmeza de la piel, sin cirugía y sin dolor.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">💎</div>
+        <h4>Radiofrecuencia con Microagujas</h4>
+        <p>Estimula la producción de colágeno propio, ideal en combinación con inductores de colágeno y exosomas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 PUBLICACIONES Y CONGRESOS -->
+<section id="publicaciones">
+  <div class="container">
+    <div style="text-align:center; max-width:800px; margin:0 auto;">
+      <p class="eyebrow">NUESTRO RESPALDO CIENTÍFICO</p>
+      <h2 class="stitle">Publicaciones y <em>congresos</em></h2>
+      
+      <p style="color:var(--text-muted); margin-top:20px; font-size:15px; line-height:1.8; text-align:left;">
+        El doctor Torres ha publicado más de cincuenta artículos en revistas médicas indexadas y dirigió las dos ediciones de Dermatología Práctica Iberolatinoamericana, tratado en el que participaron más de trescientos dermatólogos. Como miembro fundador de la Alianza Global para Mejorar los Resultados Terapéuticos en Acné, firmó varios de los consensos que hoy guían el tratamiento de esa enfermedad.
+      </p>
+      <p style="color:var(--text-muted); margin-top:14px; font-size:15px; line-height:1.8; text-align:left;">
+        Cada año acude a los congresos que marcan la agenda de la especialidad, entre ellos los de la Academia Americana de Dermatología, la Academia Europea de Dermatología y Venereología, la Reunión Anual de Dermatólogos Latinoamericanos y el Congreso Mexicano de Dermatología. Da conferencias con regularidad en la Sociedad Mexicana de Dermatología y en el Colegio Ibero-Latinoamericano de Dermatología.
+      </p>
+      
+      <div style="margin: 40px auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); transition: transform 0.4s ease; cursor: pointer;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+        <img src="https://vende24siete.com/images/collage-publicaciones-dr-vicent.jpg" alt="Publicaciones y congresos del Dr. Vicente Torres" style="width: 100%; display: block;">
+      </div>
+
+      <!-- VISUAL DE PUBLICACIONES -->
+      <div class="art-box">
+        <h3 class="art-box-title">Artículos Destacados</h3>
+        <ul class="art-list">
+          <li class="art-item">
+            <div class="art-body">
+              <p class="art-name">New insights into the management of acne: an update from the Global Alliance to Improve Outcomes in Acne Group.</p>
+              <p class="art-meta"><em>Journal of the American Academy of Dermatology</em> · 2009</p>
+            </div>
+            <a href="https://www.dermaverse.com.mx/articulos/derma1.pdf" target="_blank" rel="noopener" class="art-read" aria-label="Leer artículo en PDF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg> Leer</a>
+          </li>
+          <li class="art-item">
+            <div class="art-body">
+              <p class="art-name">Inmunolocalización de β-catenina/PCNA en biopsias de úlceras crónicas de pacientes con DM2.</p>
+              <p class="art-meta"><em>Revista del Hospital Juárez de México</em> · 2012</p>
+            </div>
+            <a href="https://www.dermaverse.com.mx/articulos/derma2.pdf" target="_blank" rel="noopener" class="art-read" aria-label="Leer artículo en PDF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg> Leer</a>
+          </li>
+          <li class="art-item">
+            <div class="art-body">
+              <p class="art-name">A call to limit antibiotic use in acne.</p>
+              <p class="art-meta"><em>Journal of Drugs in Dermatology</em> · 2013</p>
+            </div>
+            <a href="https://www.dermaverse.com.mx/articulos/derma3.pdf" target="_blank" rel="noopener" class="art-read" aria-label="Leer artículo en PDF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg> Leer</a>
+          </li>
+          <li class="art-item">
+            <div class="art-body">
+              <p class="art-name">Understanding innate immunity and inflammation in acne: implications for management.</p>
+              <p class="art-meta"><em>Journal of the European Academy of Dermatology and Venereology</em> · 2015</p>
+            </div>
+            <a href="https://www.dermaverse.com.mx/articulos/derma4.pdf" target="_blank" rel="noopener" class="art-read" aria-label="Leer artículo en PDF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg> Leer</a>
+          </li>
+          <li class="art-item">
+            <div class="art-body">
+              <p class="art-name">How people with facial acne scars are perceived in society: an online survey.</p>
+              <p class="art-meta"><em>Dermatology and Therapy</em> · 2016</p>
+            </div>
+            <a href="https://www.dermaverse.com.mx/articulos/derma5.pdf" target="_blank" rel="noopener" class="art-read" aria-label="Leer artículo en PDF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg> Leer</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 TESTIMONIOS -->
+<section id="testimonios" style="background: var(--white);">
+  <div class="container" style="text-align:center;">
+    <p class="eyebrow">LO QUE DICEN NUESTROS PACIENTES</p>
+    <h2 class="stitle">Experiencias en <em>Dermanova</em></h2>
+    <p style="color:var(--text-muted);margin-top:10px;font-size:14px;">La tranquilidad de estar en manos médicas expertas</p>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-card-top">
+          <div class="review-avatar">P</div>
+          <div>
+            <div class="review-name">Paciente de Dermatología Clínica</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <div class="review-text">
+          "Me explicó con calma qué tenía y por qué. Salí entendiendo mi piel por primera vez."
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-card-top">
+          <div class="review-avatar">A</div>
+          <div>
+            <div class="review-name">Paciente de Acné</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <div class="review-text">
+          "Llevaba años con acné y probando de todo. Aquí por fin me dieron un plan claro y médico que sí funcionó."
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-card-top">
+          <div class="review-avatar">L</div>
+          <div>
+            <div class="review-name">Paciente de Revisión de Lunares</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <div class="review-text">
+          "Muy profesionales y amables. La revisión de lunares con dermatoscopia fue precisa y me quedé completamente tranquila."
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 CONTACTO Y UBICACIONES -->
+<section id="contacto">
+  <div class="container">
+    <div style="text-align:center;max-width:700px;margin:0 auto;">
+      <p class="eyebrow">AGENDA TU CONSULTA</p>
+      <h2 class="stitle">El primer paso es <em>más fácil de lo que piensas</em></h2>
+      <p style="color:var(--text-muted);margin-top:12px;font-size:15px;">
+        No hace falta que llegues con un diagnóstico previo. Escríbenos por WhatsApp o llámanos para coordinar tu cita en la sede de tu preferencia.
+      </p>
+    </div>
+
+    <!-- TARJETAS DE LAS SEDES -->
+    <div class="sedes-grid">
+      <!-- SEDE SATÉLITE -->
+      <div class="sede-card">
+        <div>
+          <h3 class="sede-title">Sede Satélite</h3>
+          <p style="color:var(--accent);font-weight:700;font-size:12px;text-transform:uppercase;margin-bottom:14px;">Tlalnepantla de Baz, Estado de México</p>
+          <div class="sede-info-item">
+            📍 <span>Olmo 62, Valle de los Pinos, Santa Mónica, Tlalnepantla de Baz, Estado de México, C.P. 54040.</span>
+          </div>
+          <div class="sede-info-item">
+            ⏰ <span><strong>Horario:</strong> Martes y jueves de 4:00 a 8:00 PM | Sábados de 10:00 AM a 2:00 PM.</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="border-radius:14px;overflow:hidden;margin-bottom:16px;border:1px solid #E2E8F0;">
+            <iframe src="https://maps.google.com/maps?q=Olmo%2062,%20Valle%20de%20los%20Pinos,%20Santa%20M%C3%B3nica,%20Tlalnepantla&t=m&z=15&output=embed&iwloc=near" style="width:100%;height:180px;border:0;" loading="lazy"></iframe>
+          </div>
+          <div class="sede-btns">
+            <a href="https://wa.me/525516967725?text=Hola%20Dermanova,%20quisiera%20agendar%20una%20consulta%20en%20Sede%20Sat%C3%A9lite" target="_blank" class="btn-wa-sede" aria-label="Enviar WhatsApp a Sede Satélite: 55 1696 7725">
+              <span class="wa-ico"><svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M16.04 3C9.02 3 3.3 8.7 3.3 15.72c0 2.24.59 4.43 1.7 6.36L3.2 28.8l6.9-1.8a12.7 12.7 0 0 0 5.94 1.5h.01c7.02 0 12.74-5.7 12.74-12.72C28.79 8.7 23.07 3 16.04 3zm0 23.3h-.01a10.6 10.6 0 0 1-5.39-1.48l-.39-.23-4.09 1.07 1.09-3.98-.25-.41a10.5 10.5 0 0 1-1.62-5.55c0-5.83 4.75-10.57 10.6-10.57 2.83 0 5.49 1.1 7.49 3.1a10.5 10.5 0 0 1 3.1 7.48c0 5.83-4.75 10.57-10.53 10.57zm5.8-7.92c-.32-.16-1.88-.93-2.17-1.03-.29-.11-.5-.16-.71.16-.21.32-.82 1.03-1 1.24-.18.21-.37.24-.69.08-.32-.16-1.34-.49-2.55-1.57-.94-.84-1.58-1.88-1.77-2.2-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.71-.98-2.34-.26-.62-.52-.53-.71-.54h-.61c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.65 0 1.56 1.14 3.07 1.3 3.28.16.21 2.24 3.42 5.43 4.8.76.33 1.35.52 1.81.67.76.24 1.45.21 2 .13.61-.09 1.88-.77 2.14-1.51.26-.74.26-1.38.19-1.51-.08-.13-.29-.21-.61-.37z"/></svg></span>
+              <span class="wa-stack">
+                <span class="wa-default"><small>WhatsApp Satélite</small><strong>55 1696 7725</strong></span>
+                <span class="wa-hover">¡Manda Whats! <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEDE ZONA ESMERALDA -->
+      <div class="sede-card">
+        <div>
+          <h3 class="sede-title">Sede Zona Esmeralda</h3>
+          <p style="color:var(--accent);font-weight:700;font-size:12px;text-transform:uppercase;margin-bottom:14px;">Atizapán de Zaragoza, Estado de México</p>
+          <div class="sede-info-item">
+            📍 <span>Dr. Jiménez Cantú 5, 2.º piso, Zona Esmeralda (Edificio Farmacia San Pablo Chiluca), Atizapán de Zaragoza, Estado de México, C.P. 52930.</span>
+          </div>
+          <div class="sede-info-item">
+            ⏰ <span><strong>Horario:</strong> Martes a viernes de 4:00 a 8:00 PM | Sábados de 10:00 AM a 2:00 PM.</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="border-radius:14px;overflow:hidden;margin-bottom:16px;border:1px solid #E2E8F0;">
+            <iframe src="https://maps.google.com/maps?q=Dr.%20Jim%C3%A9nez%20Cant%C3%BA%205,%20Zona%20Esmeralda,%20Atizap%C3%A1n&t=m&z=15&output=embed&iwloc=near" style="width:100%;height:180px;border:0;" loading="lazy"></iframe>
+          </div>
+          <div class="sede-btns">
+            <a href="https://wa.me/525516862787?text=Hola%20Dermanova,%20quisiera%20agendar%20una%20consulta%20en%20Sede%20Zona%20Esmeralda" target="_blank" class="btn-wa-sede" aria-label="Enviar WhatsApp a Sede Zona Esmeralda: 55 1686 2787">
+              <span class="wa-ico"><svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M16.04 3C9.02 3 3.3 8.7 3.3 15.72c0 2.24.59 4.43 1.7 6.36L3.2 28.8l6.9-1.8a12.7 12.7 0 0 0 5.94 1.5h.01c7.02 0 12.74-5.7 12.74-12.72C28.79 8.7 23.07 3 16.04 3zm0 23.3h-.01a10.6 10.6 0 0 1-5.39-1.48l-.39-.23-4.09 1.07 1.09-3.98-.25-.41a10.5 10.5 0 0 1-1.62-5.55c0-5.83 4.75-10.57 10.6-10.57 2.83 0 5.49 1.1 7.49 3.1a10.5 10.5 0 0 1 3.1 7.48c0 5.83-4.75 10.57-10.53 10.57zm5.8-7.92c-.32-.16-1.88-.93-2.17-1.03-.29-.11-.5-.16-.71.16-.21.32-.82 1.03-1 1.24-.18.21-.37.24-.69.08-.32-.16-1.34-.49-2.55-1.57-.94-.84-1.58-1.88-1.77-2.2-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.71-.98-2.34-.26-.62-.52-.53-.71-.54h-.61c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.65 0 1.56 1.14 3.07 1.3 3.28.16.21 2.24 3.42 5.43 4.8.76.33 1.35.52 1.81.67.76.24 1.45.21 2 .13.61-.09 1.88-.77 2.14-1.51.26-.74.26-1.38.19-1.51-.08-.13-.29-.21-.61-.37z"/></svg></span>
+              <span class="wa-stack">
+                <span class="wa-default"><small>WhatsApp Zona Esmeralda</small><strong>55 1686 2787</strong></span>
+                <span class="wa-hover">¡Manda Whats! <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEDE MALINALCO -->
+      <div class="sede-card">
+        <div>
+          <h3 class="sede-title">Sede Malinalco</h3>
+          <p style="color:var(--accent);font-weight:700;font-size:12px;text-transform:uppercase;margin-bottom:14px;">Malinalco, Estado de México</p>
+          <div class="sede-info-item">
+            📍 <span>Antiguo Camino a San Nicolás s/n. Barrio de San Juan. Malinalco. Edo de Mex. 52463.</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="sede-btns">
+            <a href="https://wa.me/525530849136?text=Hola%20Dermanova,%20quisiera%20agendar%20una%20consulta%20en%20Sede%20Malinalco" target="_blank" class="btn-wa-sede" aria-label="Enviar WhatsApp a Sede Malinalco: 55 3084 9136">
+              <span class="wa-ico"><svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M16.04 3C9.02 3 3.3 8.7 3.3 15.72c0 2.24.59 4.43 1.7 6.36L3.2 28.8l6.9-1.8a12.7 12.7 0 0 0 5.94 1.5h.01c7.02 0 12.74-5.7 12.74-12.72C28.79 8.7 23.07 3 16.04 3zm0 23.3h-.01a10.6 10.6 0 0 1-5.39-1.48l-.39-.23-4.09 1.07 1.09-3.98-.25-.41a10.5 10.5 0 0 1-1.62-5.55c0-5.83 4.75-10.57 10.6-10.57 2.83 0 5.49 1.1 7.49 3.1a10.5 10.5 0 0 1 3.1 7.48c0 5.83-4.75 10.57-10.53 10.57zm5.8-7.92c-.32-.16-1.88-.93-2.17-1.03-.29-.11-.5-.16-.71.16-.21.32-.82 1.03-1 1.24-.18.21-.37.24-.69.08-.32-.16-1.34-.49-2.55-1.57-.94-.84-1.58-1.88-1.77-2.2-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.71-.98-2.34-.26-.62-.52-.53-.71-.54h-.61c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.65 0 1.56 1.14 3.07 1.3 3.28.16.21 2.24 3.42 5.43 4.8.76.33 1.35.52 1.81.67.76.24 1.45.21 2 .13.61-.09 1.88-.77 2.14-1.51.26-.74.26-1.38.19-1.51-.08-.13-.29-.21-.61-.37z"/></svg></span>
+              <span class="wa-stack">
+                <span class="wa-default"><small>WhatsApp Malinalco</small><strong>55 3084 9136</strong></span>
+                <span class="wa-hover">¡Manda Whats! <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTONERA VISUAL DE CONTACTO Y REDES -->
+    <div class="contact-links-bar">
+      <a href="mailto:dermanovasatelite@gmail.com" class="contact-link-item">
+        <span style="font-size: 20px;">✉️</span> dermanovasatelite@gmail.com
+      </a>
+      
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <span style="color: var(--accent-light); font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Redes:</span>
+        <a href="https://www.facebook.com/clinicadermanovamx" target="_blank" class="contact-link-item" aria-label="Facebook">
+          <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.312h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/clinicadermanovamx" target="_blank" class="contact-link-item" aria-label="Instagram">
+           <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+      </div>
+
+      <a href="https://doctoralia.com.mx/perfil/vicente-torres-lozada" target="_blank" class="contact-link-item">
+        <span style="font-size: 20px;">🩺</span> Perfil Doctoralia
+      </a>
+      <a href="https://sumedico.com/autor/dr-vicente-torres-lozada.html" target="_blank" class="contact-link-item">
+        <span style="font-size: 20px;">📰</span> Columnas en Su Médico
+      </a>
+    </div>
+
+    <!-- FORMULARIO DE CONTACTO -->
+    <div class="contact-form-wrapper">
+      <h3 style="font-family:'Playfair Display',serif;font-size:24px;margin-bottom:8px;color:var(--primary);">Envíanos un Mensaje Directo</h3>
+      <p style="font-size:13.5px;color:var(--text-muted);margin-bottom:24px;">Te responderemos a la brevedad para agendar tu valoración.</p>
+      
+      <form onsubmit="event.preventDefault(); alert('Gracias por escribir. Nos pondremos en contacto contigo a la brevedad.');">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nombre Completo</label>
+            <input type="text" placeholder="Ej. Ana García" required>
+          </div>
+          <div class="form-group">
+            <label>Teléfono / WhatsApp</label>
+            <input type="tel" placeholder="Ej. 55 1234 5678" required>
+          </div>
+          <div class="form-group full">
+            <label>Sede de tu interés</label>
+            <select required>
+              <option value="">Selecciona una clínica...</option>
+              <option value="satelite">Sede Satélite (Tlalnepantla)</option>
+              <option value="esmeralda">Sede Zona Esmeralda (Atizapán)</option>
+              <option value="malinalco">Sede Malinalco</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Motivo de consulta o mensaje</label>
+            <textarea rows="4" placeholder="Platícanos brevemente qué te preocupa de tu piel..." required></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top:20px;width:100%;">Enviar Mensaje de Contacto</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a href="#contacto" class="floating-wa-custom">
+  <div class="floating-wa-pulse"></div>
+  <svg class="floating-wa-icon" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.127.55 4.195 1.59 6.015L.302 24l6.102-1.603A11.968 11.968 0 0 0 12.031 24c6.646 0 12.031-5.385 12.031-12.031C24.062 5.385 18.677 0 12.031 0zm0 22.015a9.953 9.953 0 0 1-5.083-1.38l-.364-.216-3.774.992.997-3.681-.237-.378A9.955 9.955 0 0 1 2.07 12.03c0-5.503 4.477-9.98 9.98-9.98 5.504 0 9.98 4.477 9.98 9.98 0 5.504-4.476 9.98-9.98 9.98z"/></svg>
+  <span>Agendar Cita por WhatsApp</span>
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div style="margin-bottom: 24px;">
+      <!-- LOGOTIPO EN FOOTER -->
+      <img src="https://vende24siete.com/images/dermanova-logo.png" alt="Dermanova Logo" class="footer-logo">
+      <p style="font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent);">Una nueva forma de cuidar tu piel</p>
+    </div>
+    
+    <p style="margin-bottom:8px;">
+      <strong>Dermanova</strong> — Dermatología clínica, quirúrgica y estética<br>
+      Clínicas: Satélite, Zona Esmeralda y Malinalco, Estado de México
+    </p>
+
+    <!-- REDES SOCIALES ENLAZADAS -->
+    <div class="footer-socials" style="margin: 20px 0; display: flex; justify-content: center; gap: 20px;">
+      <a href="https://www.facebook.com/clinicadermanovamx" target="_blank" aria-label="Facebook">
+        <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.312h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/clinicadermanovamx" target="_blank" aria-label="Instagram">
+         <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+    </div>
+    
+    <p style="font-size: 13px; color: var(--accent); margin-bottom: 12px; font-weight: bold;">@clinicadermanovamx</p>
+
+    <p>
+      © 2026 Dermanova. Todos los derechos reservados. | <a href="http://demarmanova.com.mx/avisodeprivacidad.html" id="openPrivacyModal">AVISO DE PRIVACIDAD</a>
+    </p>
+  </div>
+</footer>
+
+<!-- MODAL PRIVACIDAD -->
+<div class="modal-legal" id="privacyModal">
+  <div class="modal-legal-content">
+    <button class="modal-legal-close" id="closePrivacyModal">✕</button>
+    <h3 style="font-family:'Playfair Display',serif;font-size:24px;margin-bottom:16px;">Aviso de Privacidad</h3>
+    <p style="font-size:13px;line-height:1.6;color:var(--text-muted);margin-bottom:12px;">
+      <strong>Responsable del tratamiento de tus datos:</strong> Dermanova (Dr. Vicente Torres Lozada y equipo), es responsable de recabar sus datos personales a través de este sitio. Contacto: dermanovasatelite@gmail.com.
+    </p>
+    <p style="font-size:13px;line-height:1.6;color:var(--text-muted);margin-bottom:12px;">
+      <strong>Finalidades:</strong> Responder a sus solicitudes de información, agendar y confirmar citas médicas en nuestras sedes de Satélite, Zona Esmeralda o Malinalco.
+    </p>
+    <p style="font-size:13px;line-height:1.6;color:var(--text-muted);">
+      <strong>Datos sensibles:</strong> La información sobre su estado de salud recopilada durante la atención clínica es tratada bajo estricta confidencialidad médica conforme a la normativa sanitaria mexicana.
+    </p>
+  </div>
+</div>
+
+<script>
+/* 1. CURSOR SEGUIDOR */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+});
+
+(function renderCursor(){
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+  requestAnimationFrame(renderCursor);
+})();
+
+/* 2. NAVBAR SCROLL */
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+
+/* 3. MENÚ MÓVIL */
+const navBurger = document.getElementById('navBurger');
+const mobileNav = document.getElementById('mobileNav');
+const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+
+function toggleMobileMenu(forceClose) {
+  const willOpen = forceClose ? false : !mobileNav.classList.contains('active');
+  mobileNav.classList.toggle('active', willOpen);
+  mobileNavOverlay.classList.toggle('active', willOpen);
+  navBurger.classList.toggle('active', willOpen);
+  nav.classList.toggle('menu-open', willOpen);
+  document.body.style.overflow = willOpen ? 'hidden' : '';
+}
+
+navBurger.addEventListener('click', () => toggleMobileMenu());
+mobileNavOverlay.addEventListener('click', () => toggleMobileMenu(true));
+mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => toggleMobileMenu(true)));
+
+/* 4. MODAL PRIVACIDAD */
+const privacyModal = document.getElementById('privacyModal');
+const openPrivacyModal = document.getElementById('openPrivacyModal');
+const closePrivacyModal = document.getElementById('closePrivacyModal');
+
+if (openPrivacyModal) {
+  openPrivacyModal.addEventListener('click', (e) => {
+    e.preventDefault();
+    privacyModal.classList.add('active');
+  });
+}
+
+if (closePrivacyModal) {
+  closePrivacyModal.addEventListener('click', () => {
+    privacyModal.classList.remove('active');
+  });
+}
+</script>
+</body>
+</html>
